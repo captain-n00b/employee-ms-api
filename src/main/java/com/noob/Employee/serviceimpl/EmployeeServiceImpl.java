@@ -1,5 +1,6 @@
 package com.noob.Employee.serviceimpl;
 
+import com.noob.Employee.Util.Validation;
 import com.noob.Employee.entities.EmployeeEntity;
 import com.noob.Employee.model.Employee;
 import com.noob.Employee.repositories.EmployeeRepository;
@@ -22,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee createEmployee(Employee employee) {
+        Validation.validateEmployeeDetails(employee);
         EmployeeEntity employeeEntity = new EmployeeEntity();
         BeanUtils.copyProperties(employee, employeeEntity);
         employeeRepository.save(employeeEntity);
@@ -54,6 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployeeDetails(Long id, Employee employee) {
+        Validation.validateEmployeeDetails(employee);
         EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
         employeeEntity.setEmailId(employee.getEmailId());
         employeeEntity.setFirstName(employee.getFirstName());
